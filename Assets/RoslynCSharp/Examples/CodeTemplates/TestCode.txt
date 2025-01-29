@@ -1,0 +1,9 @@
+using UnityEngine;
+
+public class MyDynamicClass
+{
+    public void MyDynamicMethod()
+    {
+        Debug.Log("Hello from dynamically compiled code!");
+    }
+}
