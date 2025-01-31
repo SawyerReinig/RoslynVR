@@ -3996,6 +3996,7 @@ GameObject:
   - component: {fileID: 502853412}
   - component: {fileID: 502853411}
   - component: {fileID: 502853415}
+  - component: {fileID: 502853416}
   m_Layer: 0
   m_Name: DynamicCube
   m_TagString: Untagged
@@ -4096,7 +4097,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 502853410}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6845208f79b04a1409d4570b4aa75578, type: 3}
   m_Name: 
@@ -4106,6 +4107,23 @@ MonoBehaviour:
     gameObject.AddComponent<Rigidbody>(); \r\n\r\t\n    }\r\n\r\n    // Update is
     called once per frame\r\n    void Update()\r\n    {\n\r\n        GetComponent<Rigidbody>().AddForce(Vector3.up);\r\n   
     }\r\n}"
+--- !u!114 &502853416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502853410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb1a42a2fcc18e042a1443c5bea572ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  generatedCode: "\r\n    using UnityEngine;\r\n\r\n    public class DynamicScript
+    : MonoBehaviour\r\n    {\r\n        void Start()\r\n        {\r\n           
+    Debug.Log(\"DynamicScript is running on \" + gameObject.name);\r\n           
+    Rigidbody rb = gameObject.AddComponent<Rigidbody>();\r\n            rb.mass =
+    2f;\r\n        }\r\n    }"
 --- !u!1 &516788929
 GameObject:
   m_ObjectHideFlags: 0
