@@ -1,0 +1,13 @@
+﻿2.4.0
+Changelog:
+-Fixed Unity 6 compatibility issues.
+-Changed the default value of AssetLoaderOptions.ApplyGammaCurveToMaterialColors to "true", preventing washed-out colors.
+-Added support for importing missing material colors from FBX files.
+-Added DoPBRConversion asset loader option. Turn off this field to disable Phong to PBR conversion based on: https://learn.microsoft.com/en-us/azure/remote-rendering/reference/material-mapping
+-Fixed orientation issues in FBX documents.
+-Reverted the FBX glossiness calculation for Phong lighting.
+-Created the AssetLoader.LoadFastestSettings method, which updates the provided AssetLoaderOptions with the fastest settings.
+-Deprecated the AssetLoaderOptions.UseCoroutines option.
+-Reworked the documentation.
+-Applied miscellaneous fixes.
+-This TriLib version includes all the tools that were available on itch.io.
