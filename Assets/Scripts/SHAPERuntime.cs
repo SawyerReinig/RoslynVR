@@ -49,11 +49,11 @@ public class SHAPERuntime : MonoBehaviour
     }
 
 
-    public void sendPrompt(string userID,string prompts,string modelid){
+    public void sendPrompt(string prompts,string modelid){
 
         
         modelID=modelid;
-        UserID=userID;
+        // UserID=userID;
 
        if(modelDownloader==null) StartCoroutine(Post($"https://{textToMeshID}-5000.proxy.runpod.net/data", "{\"prompt\":\"" + $"{prompts}" + "\",\"steps\":\"" + $"{steps}" + "\",\"cfg\":\"" + $"{cfg}" + "\",\"invoice\":\"" + $"{invoice}" + "\",\"fileFormat\":\"" + $"{format}" + "\"}"));
         else PostToTriLib($"https://{textToMeshID}-5000.proxy.runpod.net/data", "{\"prompt\":\"" + $"{prompts}" + "\",\"steps\":\"" + $"{steps}" + "\",\"cfg\":\"" + $"{cfg}" + "\",\"invoice\":\"" + $"{invoice}" + "\",\"fileFormat\":\"" + $"{format}" + "\"}");
@@ -65,7 +65,7 @@ public class SHAPERuntime : MonoBehaviour
         prompt=inputPrompt.text;
 
 
-        sendPrompt("12",prompt,"XXX");
+        //sendPrompt("12",prompt,"XXX");
 
 
 

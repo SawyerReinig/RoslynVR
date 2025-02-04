@@ -2,13 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Net;
 
 
 namespace RealityEditor
 {
     public enum GenerateType{
-        RealObject,
-        DreamDiffusion
+        Add,
+        Reconstruction,
+        Instruction,
+        VirtualFurniture,
+        None
+
+    }
+
+
+
+    public enum MeshType{
+        Generated,
+        TargetObject,
+        BackGround,
+        Modified
 
     }
 
@@ -17,6 +31,45 @@ namespace RealityEditor
     public class ModelIformation{
         public GameObject gameobjectWarp;
         public string ModelURL;
+
+        public MeshType meshType;
+
+
+        public MeshType modelType(){
+
+            if(ModelURL.Contains("scaned")){
+                if(ModelURL.Contains("target")){
+
+                       meshType=MeshType.TargetObject;
+                }
+
+                if(ModelURL.Contains("background")){
+
+
+                       meshType=MeshType.BackGround; 
+
+                }
+
+                if(ModelURL.Contains("Instruction")){
+
+                 meshType=   MeshType.Modified;
+
+                }
+
+            }else if(ModelURL.Contains("generated")){
+
+
+                meshType=MeshType.Generated;
+
+
+            } 
+
+
+            return meshType;
+        }
+
+
+        
 
 
     }
@@ -66,20 +119,57 @@ public static class TimestampGenerator
 
 
 
-// public class RealityEditorUtilities : MonoBehaviour
-// {
-//     // Start is called before the first frame update
-//     void Start()
-//     {
-        
-//     }
+public static class IDGenerator
+{
+    public static string GenerateID()
+    {
+        // Get the current date and time
+        DateTime now = DateTime.Now;
 
-//     // Update is called once per frame
-//     void Update()
-//     {
-        
-//     }
-// }
+        // Format the date and time as a timestamp string
+        string timestamp = now.ToString("yyyyMMddHHmmss");
+
+        // Append a unique identifier
+        string uniqueId = Guid.NewGuid().ToString("N").Substring(0, 8); // Shortened Guid for readability
+
+        return $"{timestamp}{uniqueId}";
+    }
+}
+
+
+public static class URLChecker
+{
+    public static bool CheckURLConnection(string url)
+    {
+        try
+        {
+            // Create a web request to the specified URL
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            
+            // Set the request method to HEAD to only get headers without downloading the content
+            request.Method = "HEAD";
+
+            // Get the response
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+            // Check if the response status is OK (200)
+            bool connectionExists = response.StatusCode == HttpStatusCode.OK;
+
+            // Close the response
+            response.Close();
+
+            return connectionExists;
+        }
+        catch (Exception e)
+        {
+            // An exception occurred, indicating that the URL connection does not exist
+          //  Debug.LogError("Error checking URL connection: " + e.Message);
+            return false;
+        }
+    }
+}
+
+
 
 
 }

@@ -14,18 +14,20 @@ public class RuntimeScriptManager : MonoBehaviour
     public GameObject Target;
 
     public string SaveDllPath;
-    public string generatedCode = @"
+
+    public string scriptID="";
+    public string generatedCode = $@"
     using UnityEngine;
 
-    public class Dynamic : MonoBehaviour
-    {
+    public class Dynamic_ : MonoBehaviour
+    {{
         void Start()
-        {
+        {{
             Debug.Log(""DynamicScript is running on "" + gameObject.name);
             Rigidbody rb = gameObject.AddComponent<Rigidbody>();
             rb.mass = 2f;
-        }
-    }";
+        }}
+    }}";
 
     void Start()
     {
@@ -34,6 +36,23 @@ public class RuntimeScriptManager : MonoBehaviour
 
     [ContextMenu("Compile and Save DLL")]
     void callCompileAndRun()
+    {
+        // string dllPath = Path.Combine(Application.dataPath, "GeneratedScripts", "DynamicScript.dll");
+        string dllPath = Path.Combine(SaveDllPath,"DynamicScript.dll");
+
+
+        Type dynamicType = CompileAndSaveDLL(generatedCode, dllPath);
+        if (dynamicType != null)
+        { 
+            // GameObject obj = new GameObject("DynamicObject");
+            // obj.AddComponent(dynamicType);
+            Target.AddComponent(dynamicType);
+        }
+    }
+
+
+
+       public void callCompileScript(string script)
     {
         // string dllPath = Path.Combine(Application.dataPath, "GeneratedScripts", "DynamicScript.dll");
         string dllPath = Path.Combine(SaveDllPath,"DynamicScript.dll");
@@ -114,6 +133,6 @@ public class RuntimeScriptManager : MonoBehaviour
 
         // Load the compiled DLL back into memory
         Assembly assembly = Assembly.LoadFrom(outputPath);
-        return assembly.GetType("Dynamic");
+        return assembly.GetType($"Dynamic_{scriptID}");
     }
 }

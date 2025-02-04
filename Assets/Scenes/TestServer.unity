@@ -1036,6 +1036,9 @@ GameObject:
   - component: {fileID: 518580233}
   - component: {fileID: 518580232}
   - component: {fileID: 518580234}
+  - component: {fileID: 518580237}
+  - component: {fileID: 518580236}
+  - component: {fileID: 518580235}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -1057,6 +1060,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Target: {fileID: 795913374}
   SaveDllPath: C:\Users\someo\Desktop\RealityEditor\PythonProject\RealityEditor\DLLfolder\
+  scriptID: 
   generatedCode: "\r\n    using UnityEngine;\r\n\r\n    public class Dynamic : MonoBehaviour\r\n   
     {\r\n        void Start()\r\n        {\r\n            Debug.Log(\"DynamicScript
     is running on \" + gameObject.name);\r\n            Rigidbody rb = gameObject.AddComponent<Rigidbody>();\r\n           
@@ -1090,6 +1094,53 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ip: 127.0.0.1
   port: 8565
+--- !u!114 &518580235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518580231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c26c017ecdab1e14cb87d3e8505ac876, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  urlid: 
+  Shape: 
+  Behaviour: 
+  ParticleConfig: 
+  runtimeScriptManager: {fileID: 518580232}
+  shapEManager: {fileID: 0}
+  prefabObject: {fileID: 1842054948329295729, guid: 463f772fdbc9c0241a223abdd3ab40a1, type: 3}
+--- !u!114 &518580236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518580231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcc443d7e4113bd478f489b841c19bbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDownloading: 0
+--- !u!114 &518580237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518580231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4aae4e497bbf4cd428151c520eae4815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ServerURL: http://10.0.0.125
+  port: 5000
+  GenPrefab: {fileID: 6019891659751213646, guid: aa848fac59bdfde4f805b17daeac5a80, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
