@@ -9,6 +9,9 @@ public class DynamicObjectCreator : MonoBehaviour
 
     public string Shape;
 
+
+
+  [TextArea(3, 15)]
     public string Behaviour;
 
     public string ParticleConfig;
@@ -33,20 +36,36 @@ public class DynamicObjectCreator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.F1)){
+
+
+
+            CreateObj();
+
+
+
+
+        }
+
+
+
     }
 
 
     public void CreateObj(){
 
-         GameObject genObject = Instantiate(prefabObject,Vector3.zero,Quaternion.identity);
 
-         DynamicObj dynamicObj=genObject.GetComponent<DynamicObj>();
-         dynamicObj.setID(IDGenerator.GenerateID());
-         shapEManager.promptcreateShape(Shape, dynamicObj.genObject);
-         runtimeScriptManager.Target=genObject;
-         runtimeScriptManager.callCompileScript(Behaviour);
 
+        StartCoroutine(RoutineControl());
+        //  GameObject genObject = Instantiate(prefabObject,Vector3.zero,Quaternion.identity);
+
+        //  DynamicObj dynamicObj=genObject.GetComponent<DynamicObj>();
+        //  dynamicObj.setID(IDGenerator.GenerateID());
+         
+        //  shapEManager.promptcreateShape(Shape, dynamicObj.genObject);
+        // //  runtimeScriptManager.Target=genObject;
+        // //  runtimeScriptManager.callCompileScript(Behaviour);
+        // runtimeScriptManager.RunScriptOntheObj(Behaviour,genObject);
 
 
 
@@ -58,8 +77,20 @@ public class DynamicObjectCreator : MonoBehaviour
         //
 
 
+    }
 
 
+
+    IEnumerator RoutineControl(){
+
+
+        GameObject genObject = Instantiate(prefabObject,Vector3.zero,Quaternion.identity);
+
+         DynamicObj dynamicObj=genObject.GetComponent<DynamicObj>();
+         dynamicObj.setID(IDGenerator.GenerateID());
+        shapEManager.promptcreateShape(Shape, dynamicObj.genObject);
+    yield return new WaitForSeconds(10f);
+        runtimeScriptManager.RunScriptOntheObj(Behaviour,genObject);
 
 
 

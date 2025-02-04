@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -656,6 +655,7 @@ MonoBehaviour:
   m_SampleFrequency: 20
   m_HitDetectionType: 0
   m_SphereCastRadius: 0.1
+  m_ConeCastAngle: 6
   m_RaycastMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -667,6 +667,7 @@ MonoBehaviour:
   m_AutoDeselect: 0
   m_TimeToAutoDeselect: 3
   m_EnableUIInteraction: 1
+  m_BlockUIOnInteractableSelection: 1
   m_AllowAnchorControl: 1
   m_UseForceGrab: 1
   m_RotateSpeed: 180
@@ -682,6 +683,7 @@ MonoBehaviour:
   m_EnableARRaycasting: 0
   m_OccludeARHitsWith3DObjects: 0
   m_OccludeARHitsWith2DObjects: 0
+  m_ScaleMode: 0
 --- !u!114 &435924270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -883,6 +885,30 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 7779212132400271959, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  m_ScaleToggleAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Scale Toggle
+      m_Type: 1
+      m_ExpectedControlType: 
+      m_Id: 4164aa8b-b8d5-403b-afd3-828598a96601
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  m_ScaleDeltaAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Scale Delta
+      m_Type: 0
+      m_ExpectedControlType: Vector2
+      m_Id: 7beaf348-dae0-4c6c-8afe-4848840e00e3
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
   m_ButtonPressPoint: 0.5
 --- !u!1 &502853410
 GameObject:
@@ -1107,11 +1133,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   urlid: 
-  Shape: 
-  Behaviour: 
+  Shape: Basketball
+  Behaviour: " using UnityEngine;\r\n\npublic class DynamicScript : MonoBehaviour\r\n   
+    {\r\n    private Vector3 startPoint = new Vector3(-3f, 0f, 0f); // Predefined
+    start position\n    private Vector3 endPoint = new Vector3(3f, 0f, 0f);   //
+    Predefined end position\n    private float speed = 2.0f;  // Predefined speed\n
+    \n    void Update()\n    {\n        // Move the object between startPoint and
+    endPoint using Mathf.PingPong\n        float t = Mathf.PingPong(Time.time * speed,
+    1);\n        transform.position = Vector3.Lerp(startPoint, endPoint, t);\n   
+    }\n\t\r\n    }"
   ParticleConfig: 
   runtimeScriptManager: {fileID: 518580232}
-  shapEManager: {fileID: 0}
+  shapEManager: {fileID: 518580237}
   prefabObject: {fileID: 1842054948329295729, guid: 463f772fdbc9c0241a223abdd3ab40a1, type: 3}
 --- !u!114 &518580236
 MonoBehaviour:
@@ -1138,7 +1171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4aae4e497bbf4cd428151c520eae4815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ServerURL: http://10.0.0.125
+  ServerURL: http://192.168.0.139
   port: 5000
   GenPrefab: {fileID: 6019891659751213646, guid: aa848fac59bdfde4f805b17daeac5a80, type: 3}
 --- !u!1 &705507993
@@ -1518,7 +1551,6 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  m_HasMigratedActions: 1
 --- !u!1 &1177485297
 GameObject:
   m_ObjectHideFlags: 0
@@ -2013,6 +2045,7 @@ MonoBehaviour:
   m_SampleFrequency: 20
   m_HitDetectionType: 0
   m_SphereCastRadius: 0.1
+  m_ConeCastAngle: 6
   m_RaycastMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -2024,6 +2057,7 @@ MonoBehaviour:
   m_AutoDeselect: 0
   m_TimeToAutoDeselect: 3
   m_EnableUIInteraction: 1
+  m_BlockUIOnInteractableSelection: 1
   m_AllowAnchorControl: 1
   m_UseForceGrab: 1
   m_RotateSpeed: 180
@@ -2039,6 +2073,7 @@ MonoBehaviour:
   m_EnableARRaycasting: 0
   m_OccludeARHitsWith3DObjects: 0
   m_OccludeARHitsWith2DObjects: 0
+  m_ScaleMode: 0
 --- !u!114 &1845432820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2240,6 +2275,30 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 875253871413052681, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  m_ScaleToggleAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Scale Toggle
+      m_Type: 1
+      m_ExpectedControlType: 
+      m_Id: a8e1ff26-4fcb-4322-a2a9-3b1c231dc112
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  m_ScaleDeltaAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Scale Delta
+      m_Type: 0
+      m_ExpectedControlType: Vector2
+      m_Id: 6c480ade-270f-4973-8484-a754117f5b7c
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
   m_ButtonPressPoint: 0.5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -46,7 +46,7 @@ public class GenObject : MonoBehaviour
 
         if(Target.transform.childCount>0){
             Genobjrenderer=Target.GetComponentInChildren<Renderer>();
-            Genobjrenderer.material.shader = Shader.Find("Shader Graphs/VertexColorURP");
+            Genobjrenderer.material.shader = Shader.Find("VertexColorShader");
 
 
         }
