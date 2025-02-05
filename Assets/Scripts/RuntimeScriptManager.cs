@@ -57,10 +57,11 @@ public class RuntimeScriptManager : MonoBehaviour
 
 
         print("Call run on object");
+         string dllPath = Path.Combine(Application.streamingAssetsPath,"DynamicScript.dll");
 
 
-             //   Type dynamicType = CompileAndSaveDLL(generatedCode, dllPath);
-            Type dynamicType = CompileAndLoadScript(code);
+             Type dynamicType = CompileAndSaveDLL(code, dllPath);
+           // Type dynamicType = CompileAndLoadScript(code);
 
         if (dynamicType != null)
         { 
@@ -161,7 +162,7 @@ public class RuntimeScriptManager : MonoBehaviour
 
         // Load the compiled DLL back into memory
         Assembly assembly = Assembly.LoadFrom(outputPath);
-        return assembly.GetType($"Dynamic_{scriptID}");
+        return assembly.GetType($"DynamicScript");
     }
 
 
