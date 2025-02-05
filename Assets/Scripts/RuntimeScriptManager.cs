@@ -12,10 +12,12 @@ public class RuntimeScriptManager : MonoBehaviour
 {
 
     public GameObject Target;
+   
 
     public string SaveDllPath;
 
     public string scriptID="";
+    public string scriptName="";
     public string generatedCode = $@"
     using UnityEngine;
 
@@ -46,7 +48,11 @@ public class RuntimeScriptManager : MonoBehaviour
         { 
             // GameObject obj = new GameObject("DynamicObject");
             // obj.AddComponent(dynamicType);
+
+
             Target.AddComponent(dynamicType);
+
+            
         }
     
     }
@@ -67,6 +73,12 @@ public class RuntimeScriptManager : MonoBehaviour
         { 
             // GameObject obj = new GameObject("DynamicObject");
             // obj.AddComponent(dynamicType);
+
+             DynamicObj dynamicObj =target.GetComponent<DynamicObj>();
+
+
+            dynamicObj.Log.Add(scriptName);
+            dynamicObj.Log.Add(code);
             target.AddComponent(dynamicType);
         }
 
@@ -96,19 +108,20 @@ public class RuntimeScriptManager : MonoBehaviour
         }
     }
     
-    Type CompileAndSaveDLL(string code, string outputPath)
+    public Type CompileAndSaveDLL(string code, string outputPath)
     {
-        SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(code);
-        string assemblyName = Path.GetRandomFileName();
+        string assemblyName = Path.GetFileNameWithoutExtension(outputPath);  // ✅ Match DLL filename
 
-        // Locate required assembly paths dynamically
+        SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(code);
+
+        // Locate required assemblies
         string coreLibPath = Path.GetFullPath(typeof(object).Assembly.Location);
         string unityEnginePath = Path.GetFullPath(typeof(UnityEngine.Debug).Assembly.Location);
         string unityCoreModulePath = Path.GetFullPath(typeof(GameObject).Assembly.Location);
         string systemRuntimePath = Path.GetFullPath(typeof(Console).Assembly.Location);
         string unityPhysicsModulePath = Path.GetFullPath(typeof(Rigidbody).Assembly.Location);
 
-        // 🔹 Locate netstandard.dll (needed for Unity .NET Standard compatibility)
+        // Locate netstandard.dll (needed for Unity .NET Standard compatibility)
         string netStandardPath = Directory.GetFiles(
             Path.GetDirectoryName(coreLibPath),
             "netstandard.dll",
@@ -117,11 +130,11 @@ public class RuntimeScriptManager : MonoBehaviour
 
         if (string.IsNullOrEmpty(netStandardPath))
         {
-            Debug.LogError("Could not find netstandard.dll. Make sure .NET Standard 2.1 is available.");
+            Debug.LogError("❌ Could not find netstandard.dll. Make sure .NET Standard 2.1 is available.");
             return null;
         }
 
-        // Add all required references
+        // ✅ Add all required references
         MetadataReference[] references = new MetadataReference[]
         {
             MetadataReference.CreateFromFile(coreLibPath),
@@ -132,37 +145,60 @@ public class RuntimeScriptManager : MonoBehaviour
             MetadataReference.CreateFromFile(unityPhysicsModulePath)
         };
 
+        // ✅ Fix the assembly name issue
         CSharpCompilation compilation = CSharpCompilation.Create(
-            assemblyName,
+            assemblyName,  // ✅ Ensures Unity loads the DLL properly
             new[] { syntaxTree },
             references,
             new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
         );
 
-        // Ensure the output directory exists
+        // ✅ Ensure the output directory exists
         string directory = Path.GetDirectoryName(outputPath);
         if (!Directory.Exists(directory))
         {
             Directory.CreateDirectory(directory);
         }
 
+        // ✅ Compile and write the DLL
         using (var fileStream = new FileStream(outputPath, FileMode.Create, FileAccess.Write))
         {
             EmitResult result = compilation.Emit(fileStream);
             if (!result.Success)
             {
-                Debug.LogError("Compilation failed:");
+                Debug.LogError("❌ Compilation failed:");
                 foreach (var diagnostic in result.Diagnostics)
+                {
                     Debug.LogError(diagnostic.ToString());
+                }
                 return null;
             }
         }
 
-        Debug.Log($"DLL successfully saved at: {outputPath}");
+        Debug.Log($"✅ DLL successfully saved at: {outputPath}");
 
-        // Load the compiled DLL back into memory
-        Assembly assembly = Assembly.LoadFrom(outputPath);
-        return assembly.GetType($"DynamicScript");
+        // ✅ Load the compiled DLL into memory
+        try
+        {
+            Assembly assembly = Assembly.LoadFrom(outputPath);
+            Type scriptType = assembly.GetType("DynamicScript");  // Ensure class name matches
+
+            if (scriptType != null)
+            {
+                Debug.Log("✅ Successfully loaded compiled script.");
+                return scriptType;
+            }
+            else
+            {
+                Debug.LogError("❌ Could not find 'DynamicScript' in compiled DLL.");
+                return null;
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"❌ Error loading DLL: {e.Message}");
+            return null;
+        }
     }
 
 

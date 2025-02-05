@@ -17,6 +17,16 @@ public class RuntimePrefabCreator : MonoBehaviour
 
     private void SaveGameObjectAsPrefab(GameObject go)
     {
+
+
+        MonoBehaviour[] scripts = objectToPrefab.GetComponents<MonoBehaviour>();
+        foreach (MonoBehaviour script in scripts)
+        {
+            Debug.Log("Attached script: " + script.GetType().Name);
+           
+        }
+
+
         string prefabPath = Path.Combine(Application.streamingAssetsPath, "GeneratedPrefab.prefab");
 
         // Create a new prefab asset
