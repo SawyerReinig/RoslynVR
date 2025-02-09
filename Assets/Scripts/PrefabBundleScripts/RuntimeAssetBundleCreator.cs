@@ -6,15 +6,25 @@ using JetBrains.Annotations;
 public class RuntimeAssetBundleCreator : MonoBehaviour
 {
 
+    void Update(){
+
+        if(Input.GetKeyDown(KeyCode.F2)){
+CreateAndSaveAssetBundle();
+
+        }
+
+
+    } 
+
      
 
 
 
     public void CreateAndSaveAssetBundle()
     {
-        string prefabPath = Path.Combine(Application.persistentDataPath, "GeneratedPrefab.prefab");
-        string dllPath = Path.Combine(Application.persistentDataPath, "GeneratedScript.dll");
-        string bundlePath = Path.Combine(Application.persistentDataPath, "GeneratedBundle");
+        string prefabPath = Path.Combine(Application.streamingAssetsPath, "GeneratedPrefab.prefab");
+        string dllPath = Path.Combine(Application.streamingAssetsPath, "DynamicScript.dll");
+        string bundlePath = Path.Combine(Application.streamingAssetsPath);
 
         if (!File.Exists(prefabPath) || !File.Exists(dllPath))
         {
